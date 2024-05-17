@@ -5,6 +5,9 @@
   "type": "module",
   "license": "ISC",
   "author": "sunshj",
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +23,8 @@
       "import": "./dist/actions.js"
     },
     "./dist/index.css": {
-      "import": "./dist/index.css",
-      "require": "./dist/index.css"
+      "require": "./dist/index.css",
+      "import": "./dist/index.css"
     }
   },
   "scripts": {
@@ -33,9 +36,6 @@
     "prepare": "husky install",
     "commit": "git-cz"
   },
-  "files": [
-    "dist"
-  ],
   "peerDependencies": {
     "react": ">=18",
     "tailwindcss": ">=3"

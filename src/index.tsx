@@ -1,6 +1,6 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import PressContainer from './PressContainer'
+import PressContainer from './components/PressContainer'
 import './global.css'
 
 interface VernierCaliperProps {
@@ -81,8 +81,8 @@ export default function VernierCaliper(props: VernierCaliperProps) {
   }, [onMouseDown, onMouseMove, onMouseUp])
 
   useEffect(() => {
-    props.onChange?.(userAnswer)
-  }, [userAnswer])
+    props.onChange && props.onChange(userAnswer)
+  }, [props, userAnswer])
 
   useEffect(() => {
     setUserAnswer(0)

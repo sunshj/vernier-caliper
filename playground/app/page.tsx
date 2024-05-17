@@ -2,8 +2,8 @@
 import 'vernier-caliper/dist/index.css'
 import VernierCaliper from 'vernier-caliper'
 import { createVernierCaliper, verifyAnswer } from 'vernier-caliper/actions'
-import { useAsyncData, useThrottle } from '../hooks'
 import { useState } from 'react'
+import { useAsyncData, useThrottle } from '../hooks'
 
 export default function Home() {
   const { data, error, pending, refresh } = useAsyncData(createVernierCaliper)
