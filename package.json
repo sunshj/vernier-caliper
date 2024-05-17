@@ -1,0 +1,79 @@
+{
+  "name": "vernier-caliper",
+  "version": "0.1.0",
+  "description": "vernier caliper captcha",
+  "type": "module",
+  "license": "ISC",
+  "author": "sunshj",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    },
+    "./actions": {
+      "types": "./dist/actions.d.ts",
+      "require": "./dist/actions.cjs",
+      "import": "./dist/actions.js"
+    },
+    "./dist/index.css": {
+      "import": "./dist/index.css",
+      "require": "./dist/index.css"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "release": "bumpp && pnpm publish",
+    "prepublishOnly": "pnpm build",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky install",
+    "commit": "git-cz"
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">=18",
+    "tailwindcss": ">=3"
+  },
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@sunshj/commitlint-config": "^1.0.0",
+    "@sunshj/eslint-config": "^1.0.6",
+    "@sunshj/prettier-config": "^1.0.0",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.2",
+    "autoprefixer": "^10.4.19",
+    "bumpp": "^9.4.1",
+    "commitizen": "^4.3.0",
+    "commitlint": "18",
+    "cz-git": "^1.9.1",
+    "eslint": "8",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.2",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.1",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{vue,js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "prettier": "@sunshj/prettier-config"
+}
