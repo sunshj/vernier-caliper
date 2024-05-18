@@ -81,8 +81,9 @@ export default function VernierCaliper(props: VernierCaliperProps) {
   }, [onMouseDown, onMouseMove, onMouseUp])
 
   useEffect(() => {
-    props.onChange && props.onChange(userAnswer)
-  }, [props, userAnswer])
+    props.onChange?.(userAnswer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userAnswer])
 
   useEffect(() => {
     setUserAnswer(0)

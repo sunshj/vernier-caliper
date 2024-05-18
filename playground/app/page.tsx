@@ -15,13 +15,7 @@ export default function Home() {
   }, 500)
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-        onClick={refresh}
-      >
-        reset
-      </button>
+    <div className="flex flex-col justify-center items-center gap-2">
       <h1 className="h-full font-bold">Move to: {data?.question}</h1>
       <div className="m-auto border">
         <VernierCaliper
@@ -33,12 +27,15 @@ export default function Home() {
           onChange={handleChange}
         />
       </div>
-      <h2 className="text-green-500 text-xl font-bold" hidden={!correct}>
-        Correct!
+      <h2 className={`text-xl font-bold ${correct ? 'text-green-500' : 'text-red-500'}`}>
+        {correct ? 'Correct!' : 'Wrong!'}
       </h2>
-      <h2 className="text-red-500 text-xl font-bold" hidden={correct}>
-        inCorrect!
-      </h2>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+        onClick={refresh}
+      >
+        reset
+      </button>
     </div>
   )
 }
