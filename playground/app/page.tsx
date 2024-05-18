@@ -29,8 +29,8 @@ export default function Home() {
           loading={pending}
           loadingMainText="loading main image..."
           loadingViceText="loading vice image..."
-          mainImageBase64={data?.mainImageBase64}
-          viceImageBase64={data?.viceImageBase64}
+          mainCaliperImage={data?.mainCaliperImage}
+          viceCaliperImage={data?.viceCaliperImage}
           onChange={handleChange}
         />
       </div>

@@ -111,8 +111,8 @@ export async function createVernierCaliper() {
   return {
     question,
     answers: hashedAnswers,
-    mainImageBase64: canvas.toDataURL(),
-    viceImageBase64: viceCanvas.toDataURL()
+    mainCaliperImage: canvas.toDataURL(),
+    viceCaliperImage: viceCanvas.toDataURL()
   }
 }
 

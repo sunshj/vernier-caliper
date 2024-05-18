@@ -7,8 +7,8 @@ interface VernierCaliperProps {
   loading?: boolean
   loadingMainText?: string
   loadingViceText?: string
-  mainImageBase64?: string
-  viceImageBase64?: string
+  mainCaliperImage?: string
+  viceCaliperImage?: string
   onChange?: (answer: number) => void
 }
 
@@ -103,7 +103,7 @@ export default function VernierCaliper(props: VernierCaliperProps) {
             <img
               draggable={false}
               loading="lazy"
-              src={props.mainImageBase64}
+              src={props.mainCaliperImage}
               alt="main-caliper-image"
               className="absolute top-0 left-0 h-full w-full"
             />
@@ -118,7 +118,7 @@ export default function VernierCaliper(props: VernierCaliperProps) {
           {!props.loading && (
             <img
               className="absolute top-0 left-0 h-full w-full cursor-grab"
-              src={props.viceImageBase64}
+              src={props.viceCaliperImage}
               alt="vice-caliper-image"
               style={{ left: `${userAnswer}px` }}
             />
