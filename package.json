@@ -70,13 +70,9 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
+    "*.{js,cjs,mjs,ts,tsx,json,md}": [
       "eslint --fix",
-      "prettier --write ."
-    ],
-    "playground/**/*.{mjs,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write ."
+      "prettier --write"
     ]
   },
   "prettier": "@sunshj/prettier-config"
