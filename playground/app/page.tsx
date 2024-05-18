@@ -1,5 +1,4 @@
 'use client'
-import 'vernier-caliper/dist/index.css'
 import VernierCaliper from 'vernier-caliper'
 import { createVernierCaliper, verifyAnswer } from 'vernier-caliper/actions'
 import { useState } from 'react'
