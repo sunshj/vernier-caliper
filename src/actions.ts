@@ -1,4 +1,5 @@
 'use server'
+import { randomInt } from 'node:crypto'
 import { createCanvas } from 'canvas'
 import {
   BG_COLOR,
@@ -15,11 +16,11 @@ import {
 } from './utils'
 
 export async function createVernierCaliper() {
-  const minNum = Math.round(Math.random() * 50)
-  const maxNum = minNum + Math.round(Math.random() * 5 + 30)
+  const minNum = randomInt(0, 50)
+  const maxNum = minNum + randomInt(30, 35)
 
-  const viceMinNum = -1 * Math.round(Math.random() * 9)
-  const viceMaxNum = Math.round(Math.random() * 8 + 10)
+  const viceMinNum = -1 * randomInt(0, 9)
+  const viceMaxNum = randomInt(10, 18)
 
   const numCount = maxNum - minNum
 
@@ -28,9 +29,9 @@ export async function createVernierCaliper() {
 
   const unitWidth = width / (numCount + 3)
 
-  const viceWidth = unitWidth * 9 + 20
+  const viceWidth = Math.round(unitWidth * 9 + 20)
   const viceUnitWidth = (unitWidth * 9) / 10
-  const vicePaddingLeft = Math.round(Math.random() * (IMG_WIDTH - viceWidth))
+  const vicePaddingLeft = randomInt(0, IMG_WIDTH - viceWidth)
 
   const canvas = createCanvas(IMG_WIDTH, IMG_HEIGHT)
   const viceCanvas = createCanvas(IMG_WIDTH, IMG_HEIGHT)
