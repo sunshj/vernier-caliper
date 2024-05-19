@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { type MouseEvent, type TouchEvent, useEffect, useRef, useState } from 'react'
 import PressContainer from './components/PressContainer'
 import './global.css'
 
@@ -19,66 +19,28 @@ export default function VernierCaliper(props: VernierCaliperProps) {
   const mouseTempLeftMove = useRef(0)
   const mouseLeftMove = useRef(0)
 
-  const viceCaliperRef = useRef<HTMLDivElement | null>(null)
-
-  const getX = (e: MouseEvent | TouchEvent) => {
-    if (e && 'touches' in e) {
-      return e.touches[0].screenX
-    }
-    if (e && 'screenX' in e) {
-      return e.screenX
-    }
+  const getScreenX = (e: MouseEvent | TouchEvent) => {
+    if (e && 'touches' in e) return e.touches[0].screenX
+    if (e && 'screenX' in e) return e.screenX
     return 0
   }
 
-  const onMouseUp = useCallback(() => {
+  const onMouseUp = () => {
     if (mouseTempLeftMove.current === userAnswer) return
     mouseTempLeftMove.current = userAnswer
-
     setIsSelected(false)
-  }, [userAnswer])
+  }
 
-  const onMouseDown = useCallback((e: MouseEvent | TouchEvent) => {
+  const onMouseDown = (e: MouseEvent | TouchEvent) => {
     e.preventDefault()
-    mouseLeftMove.current = getX(e)
+    mouseLeftMove.current = getScreenX(e)
     setIsSelected(true)
-  }, [])
+  }
 
-  const onMouseMove = useCallback(
-    (e: MouseEvent | TouchEvent) => {
-      if (!isSelected) return
-      setUserAnswer(mouseTempLeftMove.current + getX(e) - mouseLeftMove.current)
-    },
-    [isSelected]
-  )
-
-  useEffect(() => {
-    const viceCaliper = viceCaliperRef.current
-    if (!viceCaliper) return
-
-    viceCaliper.addEventListener('mouseup', onMouseUp)
-    viceCaliper.addEventListener('touchend', onMouseUp, { passive: false })
-
-    viceCaliper.addEventListener('mouseleave', onMouseUp)
-
-    viceCaliper.addEventListener('mousedown', onMouseDown)
-    viceCaliper.addEventListener('touchstart', onMouseDown, { passive: false })
-
-    viceCaliper.addEventListener('mousemove', onMouseMove)
-    viceCaliper.addEventListener('touchmove', onMouseMove, { passive: false })
-
-    return () => {
-      viceCaliper.removeEventListener('mouseup', onMouseUp)
-      viceCaliper.removeEventListener('touchend', onMouseUp)
-      viceCaliper.removeEventListener('mouseleave', onMouseUp)
-
-      viceCaliper.removeEventListener('mousedown', onMouseDown)
-      viceCaliper.removeEventListener('touchstart', onMouseDown)
-
-      viceCaliper.removeEventListener('mousemove', onMouseMove)
-      viceCaliper.removeEventListener('touchmove', onMouseMove)
-    }
-  }, [onMouseDown, onMouseMove, onMouseUp])
+  const onMouseMove = (e: MouseEvent | TouchEvent) => {
+    if (!isSelected) return
+    setUserAnswer(mouseTempLeftMove.current + getScreenX(e) - mouseLeftMove.current)
+  }
 
   useEffect(() => {
     props.onChange?.(userAnswer)
@@ -110,7 +72,16 @@ export default function VernierCaliper(props: VernierCaliperProps) {
             />
           )}
         </div>
-        <div className="relative h-10" ref={viceCaliperRef}>
+        <div
+          className="relative h-10"
+          onMouseUp={onMouseUp}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseLeave={onMouseUp}
+          onTouchEnd={onMouseUp}
+          onTouchStart={onMouseDown}
+          onTouchMove={onMouseMove}
+        >
           {props.loading && (
             <div className="animate-pulse flex justify-center items-center h-full">
               {props.loadingViceText?.length ? props.loadingViceText : '加载副尺中...'}
