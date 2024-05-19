@@ -1,7 +1,6 @@
 'use client'
 import { type MouseEvent, type TouchEvent, useEffect, useRef, useState } from 'react'
-import PressContainer from './components/PressContainer'
-import './global.css'
+import PressContainer from './PressContainer'
 
 interface VernierCaliperProps {
   loading?: boolean

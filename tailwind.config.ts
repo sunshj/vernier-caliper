@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss'
 
 export default {
-  content: ['./src/index.tsx']
+  content: ['./src/**/*.tsx']
 } satisfies Config
