@@ -2,29 +2,32 @@
 import VernierCaliper from 'vernier-caliper'
 import { createVernierCaliper, verifyAnswer } from 'vernier-caliper/actions'
 import { useState } from 'react'
-import { useAsyncData, useThrottle } from '../hooks'
+import { useDebounceFn, useRequest } from 'ahooks'
 
 export default function Home() {
-  const { data, error, pending, refresh } = useAsyncData(createVernierCaliper)
+  const { data, error, loading, refresh } = useRequest(createVernierCaliper)
   if (error) throw error
 
   const [correct, setCorrect] = useState(false)
 
-  const handleChange = useThrottle(async (value: number) => {
-    setCorrect(await verifyAnswer(value, data?.answers ?? []))
-  }, 500)
+  const handleVerify = useDebounceFn(
+    async (value: number) => {
+      setCorrect(await verifyAnswer(value, data?.answers ?? []))
+    },
+    { wait: 300 }
+  )
 
   return (
     <div className="flex flex-col justify-center items-center gap-2">
       <h1 className="h-full font-bold">Move to: {data?.question}</h1>
       <div className="m-auto border">
         <VernierCaliper
-          loading={pending}
+          loading={loading}
           loadingMainText="loading main image..."
           loadingViceText="loading vice image..."
           mainCaliperImage={data?.mainCaliperImage}
           viceCaliperImage={data?.viceCaliperImage}
-          onChange={handleChange}
+          onChange={handleVerify.run}
         />
       </div>
       <h2 className={`text-xl font-bold ${correct ? 'text-green-500' : 'text-red-500'}`}>

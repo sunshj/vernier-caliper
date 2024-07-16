@@ -2,29 +2,32 @@
 import { PressContainer, VC } from 'vernier-caliper'
 import { createVernierCaliper, verifyAnswer } from 'vernier-caliper/actions'
 import { useEffect, useState } from 'react'
-import { useAsyncData, useThrottle } from '@/hooks'
+import { useDebounceFn, useRequest } from 'ahooks'
 
 export default function Home() {
-  const { data, error, pending, refresh } = useAsyncData(createVernierCaliper)
+  const { data, error, loading, refresh } = useRequest(createVernierCaliper)
   if (error) throw error
 
   const [userAnswer, setUserAnswer] = useState(0)
   const [correct, setCorrect] = useState(false)
 
-  const handleVerify = useThrottle(async () => {
-    setCorrect(await verifyAnswer(userAnswer, data?.answers ?? []))
-  }, 500)
+  const handleVerify = useDebounceFn(
+    async () => {
+      const result = await verifyAnswer(userAnswer, data?.answers ?? [])
+      setCorrect(result)
+    },
+    { wait: 300 }
+  )
 
   useEffect(() => {
-    handleVerify()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAnswer])
+    handleVerify.run()
+  }, [handleVerify])
 
   return (
     <div className="flex flex-col justify-center items-center gap-2">
       <h1 className="h-full font-bold">Move to: {data?.question}</h1>
       <div className="m-auto border">
-        <VC value={userAnswer} loading={pending} onChange={setUserAnswer}>
+        <VC value={userAnswer} loading={loading} onChange={setUserAnswer}>
           <VC.MainCaliper caliperImage={data?.mainCaliperImage} />
           <VC.ViceCaliper caliperImage={data?.viceCaliperImage}>
             <PressContainer interval={100} onPress={() => setUserAnswer(v => v - 1)}>
