@@ -1,6 +1,6 @@
 'use server'
 import { randomInt } from 'node:crypto'
-import { createCanvas } from 'canvas'
+import { createCanvas } from '@napi-rs/canvas'
 import {
   BG_COLOR,
   FONT_COLOR,
